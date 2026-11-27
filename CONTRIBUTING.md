@@ -43,7 +43,7 @@ The title of a pull request into `dev` becomes a commit on `dev`, so it follows 
 | `ci`, `build` | Workflows, packaging, scripts | None on its own |
 | `test`, `refactor`, `style`, `chore` | No user-visible change | None on its own |
 
-- Add `!` after the type (`feat(cli)!: …`), or a `BREAKING CHANGE:` paragraph in the description, for a change that breaks existing configs, commands or scripts. That makes the next version a major one.
+- Add `!` after the type (`feat(cli)!: …`) for a change that breaks existing configs, commands or scripts. That makes the next version a major one. Only the title reaches the commit (the squash message is left empty), so say it in the title, not only in the description.
 - Common scopes: `app`, `cli`, `daemon`, `engine`, `smc`, `readme`, `help`, `release`. Leave the scope out when nothing fits.
 - A pull request that only touches docs or CI does not publish anything by itself. It ships with the next release that has a `feat`, `fix` or `perf`.
 
@@ -104,9 +104,10 @@ Open an [issue](https://github.com/fstormacq/pulse/issues/new/choose) with the o
 
 These settings support the flow above; they are listed here so they can be checked or rebuilt.
 
-- **General › Pull Requests**: allow merge commits and squash merging (squash default message: *Pull request title*), not rebase merging. Automatically delete head branches.
+- **General › Pull Requests**: allow merge commits and squash merging, not rebase merging; the commit title is the pull request's title and the message is left empty, for both. Automatically delete head branches (`dev` is protected from deletion by its ruleset, so merging `dev` into `main` keeps it).
 - **Rules › Rulesets**:
-  - `main`: require a pull request (1 approval), require the checks *Build & Test (macOS)* and *App Build & Test (macOS 26)*, allowed merge method *Merge*, block force pushes and deletion. The maintainer may bypass for pull requests only.
-  - `dev`: require a pull request, require the checks *Build & Test (macOS)*, *App Build & Test (macOS 26)* and *Pull request title*, allowed merge method *Squash*, block force pushes and deletion.
+  - `main`: require a pull request with 1 approval from a code owner, resolved conversations, the checks *Build & Test (macOS)* and *App Build & Test (macOS 26)*, allowed merge method *Merge*; block force pushes and deletion.
+  - `dev`: the same, with allowed merge method *Squash*, the extra check *Pull request title*, and branches required to be up to date before merging.
+  - Both: the maintainer may bypass, for pull requests only, to merge their own pull requests without a second reviewer.
 - **Secrets › Actions**: `TAP_TOKEN`, a fine-grained token with *Contents: read and write* on `fstormacq/homebrew-tap` only, used by the release workflow to update the tap.
 - **CODEOWNERS** (`.github/CODEOWNERS`) requests the maintainer's review on every pull request.

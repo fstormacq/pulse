@@ -21,4 +21,4 @@ docs/ci/chore → none). See CONTRIBUTING.md.
 
 - [ ] One change per pull request, into `dev`
 - [ ] Docs updated if needed (README, `docs/HELP.md`, `docs/ARCHITECTURE.md`)
-- [ ] Breaking change (config, command or script that stops working)? Then `!` in the title and a `BREAKING CHANGE:` paragraph below
+- [ ] Breaking change (config, command or script that stops working)? Then `!` in the title, e.g. `feat(cli)!: …`
